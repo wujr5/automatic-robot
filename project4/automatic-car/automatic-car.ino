@@ -18,19 +18,19 @@ unsigned int DistanceMeasured = 0;
 void set_speed_setup();
 void set_speed();
 
-void superaudible_setup();
-void get_distance_from_superaudible();
+void ultrasonic_setup();
+void get_distance_from_ultrasonic();
 
 void setup() {
   set_speed_setup();
-  superaudible_setup();
+  ultrasonic_setup();
 //  speadLeft = 100, speadRight = 100;
   set_speed();
 } 
 
 void loop() {
 // set_speed(100);
-  get_distance_from_superaudible();
+  get_distance_from_ultrasonic();
 }
 
 void set_speed_setup() {
@@ -49,25 +49,25 @@ void set_speed() {
   //  }
 }
 
-void superaudible_setup() {
+void ultrasonic_setup() {
   Serial.begin(9600);                        // Sets the baud rate to 9600
   pinMode(URTRIG,OUTPUT);                    // A low pull on pin COMP/TRIG
   digitalWrite(URTRIG,HIGH);                 // Set to HIGH 
   pinMode(URECHO, INPUT);                    // Sending Enable PWM mode command
 }
 
-void get_distance_from_superaudible() {
+void get_distance_from_ultrasonic() {
   digitalWrite(URTRIG, LOW);
   digitalWrite(URTRIG, HIGH);
 
   unsigned long LowLevelTime = pulseIn(URECHO, LOW);
 
-  if(LowLevelTime>=45000) {
-      Serial.print("Invalid");
+  if(LowLevelTime >= 45000) {
+    Serial.print("Invalid");
   } else {
-      DistanceMeasured = LowLevelTime / 50;
-      Serial.print(DistanceMeasured);
-      Serial.println("cm");
+    DistanceMeasured = LowLevelTime / 50;
+    Serial.print(DistanceMeasured);
+    Serial.println("cm");
   }
 }
 
