@@ -20,7 +20,7 @@ void PWM_Mode();
 
 void servo_and_pwm_setup() {
   Serial.begin(9600);                              // Sets the baud rate to 9600
-  myservo.attach(14);                              // Pin 9 to control servo
+  myservo.attach(10);                              // Pin 9 to control servo
   PWM_Mode_Setup();
 }
 

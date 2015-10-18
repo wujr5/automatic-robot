@@ -19,9 +19,9 @@ void setup() {
 }
 
 void loop() {
-  // servo_and_pwm();
-  set_speed(0, 100, 1);
-  delay(2000);
-  set_speed(255, 255, 1);
-  delay(3000);
+  servo_and_pwm();
+  set_speed(0, 50, 1);
+  // delay(2000);
+  // set_speed(100, 100, 1);
+  // delay(3000);
 }
