@@ -1,6 +1,6 @@
 #include <arduino.h>
 
-Servo myservo;                     // create servo object to control a servo
+// Servo myservo;                     // create servo object to control a servo
 
 int pos = 0;                       // variable to store the servo position
 unsigned int Distance = 0;
@@ -17,36 +17,52 @@ uint8_t EnPwmCmd[4] = {0x44, 0x22, 0xbb, 0x01};  // distance measure command
 
 void PWM_Mode_Setup();
 void PWM_Mode();
+void update_distance();
 
 void servo_and_pwm_setup() {
-  Serial.begin(9600);                              // Sets the baud rate to 9600
-  myservo.attach(10);                              // Pin 9 to control servo
-  PWM_Mode_Setup();
+  // Serial.begin(9600);                              // Sets the baud rate to 9600
+  myservo.attach(10);                              // Pin 10 to control servo
+  // PWM_Mode_Setup();
 }
 
 void servo_and_pwm() {
-  if (millis() - time >= 20) {
-    time = millis();
-    if (up) {
-      if(pos >= 0 && pos <= 179) {
-        pos = pos + 1;
-        myservo.write(pos);
-      }
-      if (pos > 179) up = false;
-    } else {
-      if(pos >= 1 && pos <= 180) {
-        pos = pos - 1;
-        myservo.write(pos);
-      }
-      if(pos < 1) up = true;
-    }
-  }
+  // update_distance();
+  // if (millis() - time >= 20) {
+  //   time = millis();
+  //   if (up) {
+  //     if(pos >= 0 && pos <= 179) {
+  //       pos = pos + 1;
+  //       myservo.write(pos);
+  //     }
+  //     if (pos > 179) up = false;
+  //   } else {
+  //     if(pos >= 1 && pos <= 180) {
+  //       pos = pos - 1;
+  //       myservo.write(pos);
+  //     }
+  //     if(pos < 1) up = true;
+  //   }
+  // }
 
-  if(millis() - urmTimer > 50) {
-    urmTimer = millis();
-    PWM_Mode();
-  }
+  // if(millis() - urmTimer > 50) {
+  //   urmTimer = millis();
+  //   PWM_Mode();
+  // }
 }
+
+// void update_distance() {
+//   for(pos = 0; pos <= 180; pos += 1) {                               
+//     myservo.write(pos);            
+//     delay(5);
+//     // if (pos >= 0 && pos <= 5) PWM_Mode();                      
+//   }
+
+//   for(pos = 180; pos >= 0; pos -= 1) {                                
+//     myservo.write(pos);             
+//     delay(5);
+//     // if (pos >= 0 && pos <= 5) PWM_Mode();                       
+//   } 
+// }
 
 void PWM_Mode_Setup() { 
   pinMode(URTRIG, OUTPUT);    // A low pull on pin COMP/TRIG
@@ -65,13 +81,13 @@ void PWM_Mode() {        // a low pull on pin COMP/TRIG  triggering a sensor rea
   unsigned long DistanceMeasured = pulseIn(URPWM, LOW);
 
   if (DistanceMeasured == 50000) {  // the reading is invalid.
-    Serial.print("Invalid");    
+    // Serial.print("Invalid");    
   } else {
     Distance=DistanceMeasured / 50; // every 50us low level stands for 1cm
   }
 
-  Serial.print("pos=");
-  Serial.print(pos);
-  Serial.print("D=");
-  Serial.println(Distance);
+  // Serial.print("pos=");
+  // Serial.print(pos);
+  // Serial.print("D=");
+  // Serial.println(Distance);
 }
